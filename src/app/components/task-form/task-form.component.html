@@ -1,0 +1,11 @@
+<ion-item>
+  <ion-input [(ngModel)]="title" placeholder="Dercriba la tarea..."></ion-input>
+  <ion-select [(ngModel)]="categoryId" placeholder="Categoría">
+    <ion-select-option *ngFor="let c of categories" [value]="c.id">
+      {{ c.name }}
+    </ion-select-option>
+  </ion-select>
+  <ion-button slot="end" (click)="submit()">
+    <ion-icon name="add-circle" size="large" slot="icon-only"></ion-icon>
+  </ion-button>
+</ion-item>

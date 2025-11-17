@@ -5,6 +5,11 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTasks, faPlus, faTrash, faCheck,  faComments} from '@fortawesome/free-solid-svg-icons';
+
+library.add(faTasks, faPlus, faTrash, faCheck, faComments);
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -1,0 +1,12 @@
+<ion-item>
+  <ion-input [(ngModel)]="name" placeholder="Nombre categoría"></ion-input>
+  <ion-select [(ngModel)]="color" placeholder="Color">
+    <ion-select-option value="primary">Azul</ion-select-option>
+    <ion-select-option value="success">Verde</ion-select-option>
+    <ion-select-option value="warning">Amarillo</ion-select-option>
+    <ion-select-option value="danger">Rojo</ion-select-option>
+  </ion-select>
+  <ion-button slot="end" (click)="submit()">
+    <ion-icon name="add-circle" size="large" slot="icon-only"></ion-icon>
+  </ion-button>
+</ion-item>

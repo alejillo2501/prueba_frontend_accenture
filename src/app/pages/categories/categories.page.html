@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Categorías
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Categorías</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Agregar Nueva Categoría</ion-card-title>      
+    </ion-card-header>
+    <ion-card-content>
+      <app-category-form (add)="addCategory($event)"></app-category-form>
+    </ion-card-content>
+  </ion-card>
+  
+  
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Mis Categorías</ion-card-title>      
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>        
+        <ion-item *ngFor="let c of categories">
+          <ion-label>{{ c.name }}</ion-label>
+          <ion-button fill="clear" color="danger" (click)="cat.delete(c.id); loadCategories();">
+            <ion-icon name="trash" slot="icon-only" size="large"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  
+</ion-content>

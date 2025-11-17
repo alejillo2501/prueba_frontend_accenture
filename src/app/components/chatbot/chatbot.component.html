@@ -1,0 +1,45 @@
+<ion-modal [isOpen]="open" (didDismiss)="open = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Asistente IA</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="open = false">
+            <ion-icon name="close" size="large" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+      <ion-list lines="full">
+        <ion-item *ngFor="let m of messages">
+          <ion-label class="ion-text-wrap">{{ m }}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="loading">
+          <ion-label>Bot: <ion-spinner name="dots"></ion-spinner></ion-label>
+        </ion-item>
+      </ion-list>
+      
+      <!-- Input fijo al final -->
+      <div class="input-container">
+        <ion-item>
+          <ion-input 
+            [(ngModel)]="input" 
+            [disabled]="loading"
+            placeholder="Dime la tarea..."
+            (keyup.enter)="send()"
+            type="text"
+            clearInput
+          ></ion-input>
+          <ion-button slot="end" (click)="listen()" [disabled]="loading || isListening" fill="clear">
+            <ion-icon name="mic" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" (click)="send()" [disabled]="!input.trim() || loading">
+            <ion-icon name="send"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      To Do
+    </ion-title>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Nueva tarea</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <app-task-form [categories]="categories" (add)="todo.add($event.title, $event.categoryId)"></app-task-form>
+    </ion-card-content>
+  </ion-card>  
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tareas pendientes</ion-card-title>      
+    </ion-card-header>    
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let t of incompleteTasks; trackBy: trackTask" (click)="todo.toggle(t.id)">
+          <ion-checkbox [checked]="t.completed" slot="start"></ion-checkbox>
+          <ion-label>
+            <h2>{{ t.title }}</h2>
+            <p>{{ getCategoryName(t.categoryId) }}</p>
+          </ion-label>
+          <ion-button fill="clear" color="danger" (click)="$event.stopPropagation(); todo.delete(t.id)">
+            <ion-icon name="trash" size="large" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tareas completadas</ion-card-title>      
+    </ion-card-header>    
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let t of completedTasks; trackBy: trackTask" (click)="todo.toggle(t.id)">
+          <ion-checkbox [checked]="t.completed" slot="start"></ion-checkbox>
+          <ion-label>
+            <h2>{{ t.title }}</h2>
+            <p>{{ getCategoryName(t.categoryId) }}</p>
+          </ion-label>
+          <ion-button fill="clear" color="danger" (click)="$event.stopPropagation(); todo.delete(t.id)">
+            <ion-icon name="trash" size="large" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>
+
+<app-chatbot #chatbot [categories]="categories"></app-chatbot>
+
+<app-badge [chatbot]="chatbot" [enableChatbot]="enableChatbot"></app-badge>

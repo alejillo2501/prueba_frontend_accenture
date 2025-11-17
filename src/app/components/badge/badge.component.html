@@ -1,0 +1,16 @@
+<ion-tab-bar color="light">
+  <ion-tab-button tab="home" routerLink="/home">
+    <ion-icon name="home"></ion-icon>
+    <ion-label>Home</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button tab="categories" routerLink="/categories">
+    <ion-icon name="bookmarks"></ion-icon>
+    <ion-label>Categorias</ion-label>
+  </ion-tab-button>
+
+  <ion-tab-button *ngIf="enableChatbot" tab="bot" (click)="openChatbot($event)">
+    <ion-icon name="chatbubbles"></ion-icon>
+    <ion-label>Bot IA</ion-label>
+  </ion-tab-button>
+</ion-tab-bar>
