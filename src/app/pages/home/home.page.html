@@ -16,47 +16,63 @@
     </ion-card-content>
   </ion-card>  
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Tareas pendientes</ion-card-title>      
-    </ion-card-header>    
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let t of incompleteTasks; trackBy: trackTask" (click)="todo.toggle(t.id)">
-          <ion-checkbox [checked]="t.completed" slot="start"></ion-checkbox>
-          <ion-label>
-            <h2>{{ t.title }}</h2>
-            <p>{{ getCategoryName(t.categoryId) }}</p>
-          </ion-label>
-          <ion-button fill="clear" color="danger" (click)="$event.stopPropagation(); todo.delete(t.id)">
-            <ion-icon name="trash" size="large" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-list>
+  <ion-list>
+    <ion-item>
+      <ion-label>Filtrar por categoría</ion-label>
+      <ion-select [(ngModel)]="selectedCat" interface="popover" placeholder="Todas">
+        <ion-select-option value="">Todas</ion-select-option>
+        <ion-select-option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
-    </ion-card-content>
-  </ion-card>
+  <ion-accordion-group [value]="'pending'">
+    <ion-accordion value="pending">
+      <ion-item slot="header" color="light">
+        <ion-label>Tareas pendientes</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-list>
+          <ion-item *ngFor="let t of incompleteTasks; trackBy: trackTask" (click)="todo.toggle(t.id)">
+            <ion-checkbox [checked]="t.completed" slot="start"></ion-checkbox>
+            <ion-label>
+              <h2>{{ t.title }}</h2>
+              <p class="category-label">
+                <span class="category-color-dot" [style.background-color]="getCategoryColor(t.categoryId)"></span>
+                {{ getCategoryName(t.categoryId) }}
+              </p>
+            </ion-label>
+            <ion-button fill="clear" color="danger" (click)="confirmDelete(t.id, $event)">
+              <ion-icon name="trash" size="large" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Tareas completadas</ion-card-title>      
-    </ion-card-header>    
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let t of completedTasks; trackBy: trackTask" (click)="todo.toggle(t.id)">
-          <ion-checkbox [checked]="t.completed" slot="start"></ion-checkbox>
-          <ion-label>
-            <h2>{{ t.title }}</h2>
-            <p>{{ getCategoryName(t.categoryId) }}</p>
-          </ion-label>
-          <ion-button fill="clear" color="danger" (click)="$event.stopPropagation(); todo.delete(t.id)">
-            <ion-icon name="trash" size="large" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </ion-list>
-
-    </ion-card-content>
-  </ion-card>
+    <ion-accordion value="completed">
+      <ion-item slot="header" color="light">
+        <ion-label>Tareas completadas</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-list>
+          <ion-item *ngFor="let t of completedTasks; trackBy: trackTask" (click)="todo.toggle(t.id)">
+            <ion-checkbox [checked]="t.completed" slot="start"></ion-checkbox>
+            <ion-label>
+              <h2>{{ t.title }}</h2>
+              <p class="category-label">
+                <span class="category-color-dot" [style.background-color]="getCategoryColor(t.categoryId)"></span>
+                {{ getCategoryName(t.categoryId) }}
+              </p>
+            </ion-label>
+            <ion-button fill="clear" color="danger" (click)="confirmDelete(t.id, $event)">
+              <ion-icon name="trash" size="large" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
   
 </ion-content>
 

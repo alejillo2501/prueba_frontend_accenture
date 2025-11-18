@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonInput, IonSelect, IonSelectOption, IonButton, IonItem, IonIcon } from '@ionic/angular/standalone';
+import { IonInput, IonSelect, IonSelectOption, IonButton, IonItem, IonIcon, IonLabel, IonList } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Category } from '../../services/category.service';
 import { addIcons } from 'ionicons';
@@ -19,7 +19,9 @@ import { addCircle } from 'ionicons/icons';
     IonSelectOption, 
     IonButton, 
     IonItem, 
-    IonIcon
+    IonIcon,
+    IonLabel,
+    IonList
   ],
 })
 export class TaskFormComponent {

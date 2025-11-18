@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskFormComponent } from '../../components/task-form/task-form.component';
@@ -37,7 +37,8 @@ export class HomePage implements OnInit {
   constructor(
     public todo: TodoService,
     public cat: CategoryService,
-    public firebase: FirebaseService
+    public firebase: FirebaseService,
+    private alertCtrl: AlertController
   ) {
     addIcons({ pricetagsOutline, trash });
   }
@@ -71,4 +72,45 @@ export class HomePage implements OnInit {
   const category = this.categories.find(c => c.id === categoryId);
   return category?.name || 'Sin categoría';
 }
+
+  getCategoryColor(categoryId: string): string {
+    const category = this.categories.find(c => c.id === categoryId);
+    const colorName = category?.color?.toLowerCase();
+
+    switch (colorName) {
+      case 'primary':
+        return '#3880ff';
+      case 'secondary':
+        return '#3dc2ff';
+      case 'tertiary':
+        return '#5260ff';
+      case 'success':
+        return '#2dd36f';
+      case 'warning':
+        return '#ffc409';
+      case 'danger':
+        return '#eb445a';
+      default:
+        return '#808080'; // Gris por defecto si no hay color o no coincide
+    }
+  }
+
+  async confirmDelete(taskId: string, event: MouseEvent) {
+    event.stopPropagation();
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmar eliminación',
+      message: '¿Estás seguro de que quieres eliminar esta tarea?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => this.todo.delete(taskId),
+        },
+      ],
+    });
+    await alert.present();
+  }
 }
