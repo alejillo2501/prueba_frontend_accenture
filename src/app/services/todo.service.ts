@@ -43,5 +43,13 @@ export class TodoService {
   delete(id: string) {
     this.tasks = this.tasks.filter(x => x.id !== id);
     this.save();
-  }  
+  }
+
+  update(id: string, title: string) {
+    const task = this.tasks.find(x => x.id === id);
+    if (task) {
+      task.title = title;
+      this.save();
+    }
+  }
 }

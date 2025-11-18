@@ -35,6 +35,9 @@
       <ion-list>        
         <ion-item *ngFor="let c of categories">
           <ion-label>{{ c.name }}</ion-label>
+          <ion-button fill="clear" color="primary" (click)="editCategory(c, $event)">
+            <ion-icon name="create-outline" slot="icon-only" size="large"></ion-icon>
+          </ion-button>
           <ion-button fill="clear" color="danger" (click)="confirmDelete(c.id, $event)">
             <ion-icon name="trash" slot="icon-only" size="large"></ion-icon>
           </ion-button>

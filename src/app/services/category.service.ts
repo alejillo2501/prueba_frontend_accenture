@@ -35,5 +35,13 @@ export class CategoryService {
     this.cats = this.cats.filter(x => x.id !== id);
     this.save();
   }
+
+  update(id: string, name: string) {
+    const cat = this.cats.find(x => x.id === id);
+    if (cat) {
+      cat.name = name;
+      this.save();
+    }
+  }
   
 }
