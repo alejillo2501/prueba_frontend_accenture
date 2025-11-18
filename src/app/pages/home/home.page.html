@@ -42,6 +42,9 @@
                 {{ getCategoryName(t.categoryId) }}
               </p>
             </ion-label>
+            <ion-button fill="clear" color="primary" (click)="editTask(t, $event)">
+              <ion-icon name="create-outline" slot="icon-only" size="large"></ion-icon>
+            </ion-button>
             <ion-button fill="clear" color="danger" (click)="confirmDelete(t.id, $event)">
               <ion-icon name="trash" size="large" slot="icon-only"></ion-icon>
             </ion-button>
@@ -65,6 +68,9 @@
                 {{ getCategoryName(t.categoryId) }}
               </p>
             </ion-label>
+            <ion-button fill="clear" color="primary" (click)="editTask(t, $event)">
+              <ion-icon name="create-outline" slot="icon-only" size="large"></ion-icon>
+            </ion-button>
             <ion-button fill="clear" color="danger" (click)="confirmDelete(t.id, $event)">
               <ion-icon name="trash" size="large" slot="icon-only"></ion-icon>
             </ion-button>

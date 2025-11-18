@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { Category, CategoryService } from '../../services/category.service';
 import { CategoryFormComponent } from '../../components/category-form/category-form.component';
+import { addIcons } from 'ionicons';
+import { createOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-categories',
@@ -18,7 +20,9 @@ export class CategoriesPage implements OnInit {
   constructor(
     public cat: CategoryService,
     private alertCtrl: AlertController
-  ) { }
+  ) {
+    addIcons({ createOutline });
+  }
 
   ngOnInit() {
     // Cargar las categorías cuando la página se inicie
@@ -38,6 +42,38 @@ export class CategoriesPage implements OnInit {
   addCategory(event: { name: string, color: string }) {
     this.cat.add(event.name, event.color);
     this.loadCategories(); // Recargar la lista para mostrar la nueva categoría
+  }
+
+  async editCategory(category: Category, event: MouseEvent) {
+    event.stopPropagation();
+  
+    const alert = await this.alertCtrl.create({
+      header: 'Editar Categoría',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          value: category.name,
+          placeholder: 'Nuevo nombre'
+        }        
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Guardar',
+          handler: (data) => {
+            if (data.name) {
+              this.cat.update(category.id, data.name);
+              this.loadCategories();
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async confirmDelete(categoryId: string, event: MouseEvent) {
