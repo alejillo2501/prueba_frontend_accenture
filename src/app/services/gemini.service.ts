@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GeminiService {
-  private genAI = new GoogleGenerativeAI('AIzaSyDb9RR_TFjApkukd98VyP_6W0KtGtLT4J4');
-  private model = this.genAI.getGenerativeModel({ model: 'gemini-2.5-pro' });
+  private genAI = new GoogleGenerativeAI(environment.gemini.apiKey);
+  private model = this.genAI.getGenerativeModel({ model: environment.gemini.modelName });
 
   async extractTask(prompt: string): Promise<{ title: string; category: string } | null> {
     const clean = `Extrae título y categoría de esta frase: "${prompt}". Responde solo con formato JSON: {"title":"...","category":"..."}`;
