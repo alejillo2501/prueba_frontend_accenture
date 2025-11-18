@@ -9,7 +9,7 @@ import { Category, CategoryService } from '../../services/category.service';
 import { Task, TodoService } from '../../services/todo.service';
 import { FirebaseService } from '../../services/firebase.service';
 import { addIcons } from 'ionicons';
-import { pricetagsOutline, trash } from 'ionicons/icons';
+import { pricetagsOutline, trash, createOutline } from 'ionicons/icons';
 import { BadgeComponent } from 'src/app/components/badge/badge.component';
 
 @Component({
@@ -40,7 +40,7 @@ export class HomePage implements OnInit {
     public firebase: FirebaseService,
     private alertCtrl: AlertController
   ) {
-    addIcons({ pricetagsOutline, trash });
+    addIcons({ pricetagsOutline, trash, createOutline });
   }
 
   async ngOnInit() {
@@ -93,6 +93,36 @@ export class HomePage implements OnInit {
       default:
         return '#808080'; // Gris por defecto si no hay color o no coincide
     }
+  }
+
+  async editTask(task: Task, event: MouseEvent) {
+    event.stopPropagation();
+    const alert = await this.alertCtrl.create({
+      header: 'Editar Tarea',
+      inputs: [
+        {
+          name: 'title',
+          type: 'text',
+          value: task.title,
+          placeholder: 'Nueva descripción'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Guardar',
+          handler: (data) => {
+            if (data.title) {
+              this.todo.update(task.id, data.title);
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async confirmDelete(taskId: string, event: MouseEvent) {
